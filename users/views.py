@@ -11,6 +11,7 @@ def add_user(request: HttpRequest) -> HttpResponse:
             age=form.get("age"),
             gender=form.get("gender"),
             diagnosis=form.get("diagnosis"),
+            doctor_name=form.get("doctor_name"),
         )
         new_bemor.save()
         return redirect("table_name")

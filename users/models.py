@@ -9,6 +9,7 @@ class Bemorlar(models.Model):
     age = models.IntegerField()
     gender = models.CharField(max_length=10, choices=gender_choice, null= False)
     diagnosis = models.TextField()
+    doctor_name = models.CharField(max_length=128)
 
     def __str__(self):
         return f"{self.id}. {self.name}  -- {self.diagnosis}"

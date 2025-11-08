@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import bemor_detail
+from .views import add_drug, drug_view
 
 urlpatterns = [
-    path("", bemor_detail, name="bemor_detail"),
-    
+    path("", drug_view, name="drug_view"),
+    path("drug_view/<int:bemor_id>/", add_drug, name="add_drug"),                
 ]

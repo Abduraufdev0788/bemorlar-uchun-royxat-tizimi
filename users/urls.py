@@ -6,5 +6,5 @@ urlpatterns = [
     path("table/", bemorlar_royxati, name="table_name"),
     path("table/<int:id>/", drug_view, name="drug_view"),
     path("add/", add_user, name="add_user"),
-    path("drugs/", include("dorilar.urls")),
+    path("", include("dorilar.urls")),
 ]

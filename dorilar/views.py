@@ -32,9 +32,9 @@ def add_drug(request: HttpRequest, bemor_id: int) -> HttpResponse:
 
         new_dori.save()
 
-        return redirect("bemor_detail", id=bemor_id)
+        return redirect("drug_view", id=bemor_id)
     
-    return render(request, "add_drug.html", {"bemor": bemor})
+    return render(request, "add_drugs.html", {"bemor": bemor})
 
         
         

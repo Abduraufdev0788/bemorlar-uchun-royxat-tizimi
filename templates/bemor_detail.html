@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ bemor.name }} - Dori ro‘yxati</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .bemor-card {
+      border-radius: 15px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    .table thead {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+    }
+    .active {
+      background-color: #198754;
+      color: white;
+    }
+    .inactive {
+      background-color: #dc3545;
+      color: white;
+    }
+    .back-btn {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container py-4">
+  <div class="bemor-card bg-white p-4 mb-4">
+    <h2 class="text-primary text-center mb-3">🏥 {{ bemor.name }} haqida ma’lumot</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Yosh:</strong> {{ bemor.age }}</p>
+        <p><strong>Jinsi:</strong> {{ bemor.gender }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Kasallik:</strong> {{ bemor.diagnosis }}</p>
+        <p><strong>Doktor:</strong> {{ bemor.doctor_name|default:"Ko‘rsatilmagan" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">💊 Bemorga yozilgan dorilar</h4>
+    </div>
+    <div class="card-body">
+      {% if dorilar.all %}
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Dori nomi</th>
+                <th>Tavsif</th>
+                <th>Kuniga necha marta</th>
+                <th>Miqdori</th>
+                <th>Ichish vaqti</th>
+                <th>Boshlangan sana</th>
+                <th>Tugash sanasi</th>
+                <th>Holat</th>
+                <th>Shifokor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for dori in bemor.dorilar.all %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><strong>{{ dori.dori_name }}</strong></td>
+                <td>{{ dori.description|default:"Izoh yo‘q" }}</td>
+                <td>{{ dori.once_in_day }} marta</td>
+                <td>{{ dori.dosage|default:"-" }}</td>
+                <td>{{ dori.usage_time|default:"-" }}</td>
+                <td>{{ dori.created_at|date:"d.m.Y" }}</td>
+                <td>{{ dori.finish_at|date:"d.m.Y" }}</td>
+                <td>
+                  {% if dori.is_active %}
+                    <span class="status-badge active">Davom etmoqda</span>
+                  {% else %}
+                    <span class="status-badge inactive">Tugagan</span>
+                  {% endif %}
+                </td>
+                <td>{{ dori.doctor_name|default:"-" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-center text-muted">Hozircha bu bemorga dori yozilmagan 💊</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="text-center back-btn">
+    <a href='{% url "table_name" %}' class="btn btn-secondary">⬅ Orqaga qaytish</a>
+  </div>
+</div>
+
+</body>
+</html>
